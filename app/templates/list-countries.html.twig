@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main style="margin: 0 auto; max-width: 1100px;">
+        <div>
+            {% for country in countries %}
+                <div class="country" style="display: flex; align-items: center;">
+                    <div>
+                        <img style="width: 80px; height: 53px; object-fit: contain" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="">
+                    </div>
+                    <div style="margin-left: 20px;">
+                        {{ country.name }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
