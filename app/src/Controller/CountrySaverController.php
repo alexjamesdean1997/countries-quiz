@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CountrySaver extends AbstractController
+class CountrySaverController extends AbstractController
 {
     /* Commented to avoid involuntary country saving
     #[Route('/saver')]
