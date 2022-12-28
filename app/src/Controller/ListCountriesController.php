@@ -8,7 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class ListCountries extends AbstractController
+class ListCountriesController extends AbstractController
 {
     #[Route('/countries')]
     public function show(ManagerRegistry $doctrine): Response
