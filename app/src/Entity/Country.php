@@ -19,6 +19,8 @@ class Country
     #[ORM\Column(length: 255)]
     private ?string $flag_img_code = null;
 
+    private ?string $encrypted_name = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -32,6 +34,18 @@ class Country
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getEncryptedName(): ?string
+    {
+        return $this->encrypted_name;
+    }
+
+    public function setEncryptedName(string $encrypted_name): self
+    {
+        $this->encrypted_name = $encrypted_name;
 
         return $this;
     }
