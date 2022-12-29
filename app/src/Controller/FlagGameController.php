@@ -113,4 +113,32 @@ class FlagGameController extends AbstractController
             return $response;
         }
     }
+
+    #[Route('/stop-flag-game', methods: ['POST'])]
+    public function stopGame(): Response
+    {
+        $response       = new Response();
+        $entityManager  = $this->doctrine->getManager();
+        $user           = $this->getUser();
+        $gameRepository = $this->doctrine->getRepository(Game::class);
+        $gameInProgress = $gameRepository->findOneBy(
+            [
+                'player' => $user->getId(),
+                'state' => GameService::GAME_STATE_IN_PROGRESS
+            ]
+        );
+
+        if (null !== $gameInProgress) {
+            $gameInProgress->setState(GameService::GAME_STATE_FINISHED);
+            $gameInProgress->setFinishedAt(new DateTimeImmutable());
+            $entityManager->persist($gameInProgress);
+            $entityManager->flush();
+            $response->setStatusCode(Response::HTTP_OK);
+            return $response;
+        }
+
+        $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+        $response->setContent('No games in progress found');
+        return $response;
+    }
 }
