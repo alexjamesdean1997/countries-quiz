@@ -1,11 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block gamebar %}
+<div class="game-bar">
+    <div class="game-timer">
+        <span id="gameTimerHours">00</span>
+        <span class="timer-separator hours-separator">:</span>
+        <span id="gameTimerMinutes">00</span>
+        <span class="timer-separator">:</span>
+        <span id="gameTimerSeconds">00</span>
+    </div>
+    <div class="success-counter">
+        <span class="successes">0</span>
+        <span class="total">/ {{ countries|length }}</span>
+    </div>
+    <div class="game-stop">
+        <button id="stopFlagGame" class="btn btn-stop">
+            {{ 'Terminer' }}
+        </button>
+    </div>
+</div>
+{% endblock %}
 {% block body %}
     <main>
-        <div class="success-counter">
-            <span class="successes">0</span>
-            <span class="total">/ {{ countries|length }}</span>
-        </div>
         <div class="countries">
             {% for country in countries %}
                 <div class="country" data-encrypted="{{ country.getEncryptedName }}">
