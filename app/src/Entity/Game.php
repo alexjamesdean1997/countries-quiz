@@ -25,6 +25,15 @@ class Game
     #[ORM\Column(length: 255)]
     private ?string $type = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $state = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $started_at = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $finished_at = null;
+
     public function __construct()
     {
         $this->forgotten_countries = new ArrayCollection();
@@ -79,6 +88,42 @@ class Game
     public function setType(string $type): self
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getState(): ?string
+    {
+        return $this->state;
+    }
+
+    public function setState(string $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getStartedAt(): ?\DateTimeImmutable
+    {
+        return $this->started_at;
+    }
+
+    public function setStartedAt(\DateTimeImmutable $started_at): self
+    {
+        $this->started_at = $started_at;
+
+        return $this;
+    }
+
+    public function getFinishedAt(): ?\DateTimeImmutable
+    {
+        return $this->finished_at;
+    }
+
+    public function setFinishedAt(?\DateTimeImmutable $finished_at): self
+    {
+        $this->finished_at = $finished_at;
 
         return $this;
     }

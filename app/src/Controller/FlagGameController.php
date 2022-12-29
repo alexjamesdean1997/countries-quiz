@@ -6,6 +6,7 @@ use App\Entity\Country;
 use App\Entity\Game;
 use App\Service\Encrypter;
 use App\Service\GameService;
+use DateTimeImmutable;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,15 +40,33 @@ class FlagGameController extends AbstractController
 
     private function startGame(array $countries): void
     {
+        $entityManager  = $this->doctrine->getManager();
+        $user           = $this->getUser();
+        $gameRepository = $this->doctrine->getRepository(Game::class);
+        $gameInProgress = $gameRepository->findOneBy(
+            [
+                'player' => $user->getId(),
+                'state' => GameService::GAME_STATE_IN_PROGRESS
+            ]
+        );
+
+        if (null !== $gameInProgress) {
+            $gameInProgress->setState(GameService::GAME_STATE_FINISHED);
+            $gameInProgress->setFinishedAt(new DateTimeImmutable());
+            $entityManager->persist($gameInProgress);
+            $entityManager->flush();
+        }
+
         $game = new Game();
-        $game->setPlayer($this->getUser());
+        $game->setPlayer($user);
+        $game->setStartedAt(new DateTimeImmutable());
+        $game->setState(GameService::GAME_STATE_IN_PROGRESS);
         $game->setType(GameService::GAME_TYPE_FLAGS);
 
         foreach ($countries as $country){
             $game->addForgottenCountry($country);
         }
 
-        $entityManager = $this->doctrine->getManager();
         $entityManager->persist($game);
         $entityManager->flush();
     }
