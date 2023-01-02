@@ -21,7 +21,7 @@ class FlagGameController extends AbstractController
         $this->doctrine = $doctrine;
     }
 
-    #[Route('/flag-game')]
+    #[Route('/flag-game', name: 'app_flag_game')]
     public function show(ManagerRegistry $doctrine): Response
     {
         $countries = $doctrine->getRepository(Country::class)->findAll();

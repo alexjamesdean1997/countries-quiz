@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main>
+        <h1>{{ 'Choisissez un mode de jeu' }}</h1>
+        <div class="games">
+            <a href="{{ path('app_flag_game') }}">{{ 'Trouvez le pays de chaque drapeau' }}</a>
+        </div>
+    </main>
+{% endblock %}
