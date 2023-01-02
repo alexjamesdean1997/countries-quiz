@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ListCountriesController extends AbstractController
 {
-    #[Route('/countries')]
+    #[Route('/', name: 'app_list_countries')]
     public function show(ManagerRegistry $doctrine): Response
     {
         $countries = $doctrine->getRepository(Country::class)->findAll();
