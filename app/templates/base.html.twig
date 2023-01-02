@@ -13,7 +13,18 @@
         {% endblock %}
     </head>
     <body>
-        {% block navbar %}{% endblock %}
+        {% block navbar %}
+            <header>
+                <div class="logo">
+                    Geogames
+                </div>
+                <nav>
+                    <a href="{{ path('app_games') }}">{{ 'Jouer' }}</a>
+                    <a href="{{ path('app_dashboard') }}">{{ 'Mon compte' }}</a>
+                    <a href="{{ path('app_logout') }}">{{ 'Déconnexion' }}</a>
+                </nav>
+            </header>
+        {% endblock %}
         {% block gamebar %}{% endblock %}
         {% block body %}{% endblock %}
     </body>
