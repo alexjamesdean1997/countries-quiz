@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="game-datails">
+        <h1>{{ 'Résumé de la partie' }}</h1>
+        <section>
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-title">
+                        {{ 'Score' }}
+                    </div>
+                    <div class="stat-number">
+                        <div class="success-counter">
+                            <span class="successes">{{ score }}</span>
+                            <span class="total">/ {{ countries|length }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">
+                        {{ 'Temps de jeu' }}
+                    </div>
+                    <div class="stat-number">
+                        {% if (game.getDuration.format('%h') > 0) %}
+                            {{ game.getDuration.format('%h h') }}
+                        {% endif %}
+                        {{ game.getDuration.format('%i m %s s') }}
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">
+                        {{ 'Date' }}
+                    </div>
+                    <div class="stat-number">
+                        {{ game.getStartedAt.format('d/m/Y') }}
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <h2>{{ 'Les drapeaux que tu as oublié' }}</h2>
+            <div class="countries">
+                {% for country in forgotten_countries %}
+                    <div class="country">
+                        <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                        <div class="name">
+                            {{ country.name }}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}

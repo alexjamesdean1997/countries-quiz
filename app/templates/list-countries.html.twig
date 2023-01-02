@@ -2,9 +2,10 @@
 
 {% block body %}
     <main>
+        <h1>{{ 'Les drapeaux des pays du monde' }}</h1>
         <div class="countries">
             {% for country in countries %}
-                <div class="country" style="display: flex; align-items: center;">
+                <div class="country">
                     <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
                     <div class="name">
                         {{ country.name }}

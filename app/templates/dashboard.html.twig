@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="dashboard">
+        <h1>{{ user.getUsername }}</h1>
+        <section class="game-block">
+            <h2>{{ 'Trouvez le pays de chaque drapeau' }}</h2>
+            <div class="game-stats">
+                <div class="stat">
+                    <div class="stat-title">
+                        {{ 'Parties jouées' }}
+                    </div>
+                    <div class="stat-number">{{ flag_games|length }}</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">
+                        {{ 'Meilleur score' }}
+                    </div>
+                    <div class="stat-number">
+                        <div class="success-counter">
+                            <span class="successes">{{ best_score }}</span>
+                            <span class="total">/ {{ countries|length }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat">
+                    <div class="stat-title">
+                        {{ 'Temps moyen par bonne réponse' }}
+                    </div>
+                    <div class="stat-number">
+                        {{ average_score_time }} secondes
+                    </div>
+                </div>
+            </div>
+            <h3>{{'Vos dernières parties'}}</h3>
+            <div class="games-listing">
+                {% for game in flag_games %}
+                    <div class="game-summary">
+                        <div class="game-timer">
+                            {% if (game.getDuration.format('%h') > 0) %}
+                                {{ game.getDuration.format('%h h') }}
+                            {% endif %}
+                            {{ game.getDuration.format('%i m %s s') }}
+                        </div>
+                        <div class="success-counter">
+                            <span class="successes">{{ countries|length - game.getForgottenCountries|length }}</span>
+                            <span class="total">/ {{ countries|length }}</span>
+                        </div>
+                        <div class="game-stop">
+                            <a class="btn" href="/game/{{ game.id }}">
+                                {{ 'En savoir plus' }}
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    </main>
+{% endblock %}
