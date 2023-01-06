@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Country;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use DateTimeImmutable;
@@ -46,8 +47,12 @@ class RegistrationController extends AbstractController
             return $this->redirectToRoute('app_list_countries');
         }
 
+        $countries    = $this->doctrine->getRepository(Country::class)->findAll();
+        shuffle($countries);
+
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
+            'countries'        => $countries,
         ]);
     }
 }

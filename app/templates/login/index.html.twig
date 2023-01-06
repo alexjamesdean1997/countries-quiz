@@ -1,22 +1,62 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LoginController!{% endblock %}
+{% block title %}{{ 'Connexion' }}{% endblock %}
 
 {% block body %}
-    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+    <main>
+        {% if error %}
+            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
 
-    <form action="{{ path('app_login') }}" method="post">
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="_username" value="{{ last_username }}">
+        <section class="login">
+            <div class="login-form">
+                <h1>{{ 'Connexion' }}</h1>
+                <form action="{{ path('app_login') }}" method="post">
+                    <div class="form-field">
+                        <label for="username">{{ 'Nom d\'utilisateur'}}</label>
+                        <input type="text" id="username" name="_username" value="{{ last_username }}">
+                    </div>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password">
+                    <div class="form-field">
+                        <label for="password">{{ 'Mot de passe' }}</label>
+                        <input type="password" id="password" name="_password">
+                    </div>
 
-        {# If you want to control the URL the user is redirected to on success
-        <input type="hidden" name="_target_path" value="/account"> #}
-
-        <button type="submit">login</button>
-    </form>
+                    <button class="btn" type="submit">{{ 'Valider' }}</button>
+                </form>
+            </div>
+            <div class="login-countries">
+                <div class="countries">
+                    {% for country in countries %}
+                        <div class="country">
+                            <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                            <div class="name">
+                                {{ country.name }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="countries countries--reverse">
+                    {% for country in countries %}
+                        <div class="country">
+                            <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                            <div class="name">
+                                {{ country.name }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="countries">
+                    {% for country in countries|shuffle %}
+                        <div class="country">
+                            <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                            <div class="name">
+                                {{ country.name }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </main>
 {% endblock %}

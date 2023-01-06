@@ -20,16 +20,18 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'app_login')]
     public function index(AuthenticationUtils $authenticationUtils): Response
     {
-        $error = $authenticationUtils->getLastAuthenticationError();
+        $error        = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-
+        $countries    = $this->doctrine->getRepository(Country::class)->findAll();
+        shuffle($countries);
         $user = $this->getUser();
 
-        /*if (null !== $user){
-            return $this->redirectToRoute('app_flaggame_show');
-        }*/
+        if (null !== $user){
+            return $this->redirectToRoute('app_dashboard');
+        }
 
         return $this->render('login/index.html.twig', [
+            'countries'     => $countries,
             'last_username' => $lastUsername,
             'error'         => $error,
         ]);
