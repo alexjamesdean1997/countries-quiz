@@ -1,0 +1,49 @@
+.countries {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    &:after {
+        content: "";
+        flex: auto;
+    }
+
+    .country {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 180px;
+        padding: 20px;
+        border-radius: 10px;
+
+        .flag {
+            height: 100%;
+            display: flex;
+            align-items: center;
+
+            img {
+                max-width: 120px;
+                object-fit: contain;
+                box-shadow: 0 0 16px #00000040;
+            }
+        }
+
+        .name {
+            text-align: center;
+            margin-top: 10px;
+
+            &.success {
+                font-weight: bold;
+                color: forestgreen;
+            }
+
+            &.fail {
+                font-weight: bold;
+                color: darkred;
+            }
+        }
+    }
+}

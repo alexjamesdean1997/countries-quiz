@@ -40,3 +40,14 @@
         }
     }
 }
+
+a{
+    text-decoration: none;
+    padding: 0 15px;
+    color: #007bff;
+
+    &:hover, &:focus{
+        color: #0062cc;
+        text-decoration: none;
+    }
+}

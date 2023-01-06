@@ -12,16 +12,12 @@ header{
     .logo{
         font-size: 24px;
         font-weight: bold;
+        color: black;
     }
 
     nav{
         display: flex;
         justify-content: flex-end;
         align-items: center;
-
-        a{
-            text-decoration: none;
-            padding: 0 15px;
-        }
     }
 }

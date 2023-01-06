@@ -1,5 +1,4 @@
-import './styles/app.scss';
-import './bootstrap';
+import '../styles/app.scss';
 import $ from 'jquery';
 import * as CryptoJS from 'crypto-js';
 
@@ -58,9 +57,12 @@ function isCorrectAnswer(correctAnswer, userAnswer) {
     if (correctAnswer === userAnswer){
         return true;
     }
+    console.log({userAnswer, correctAnswer});
 
-    let normalisedCorrectAnswer = correctAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace('-', ' ').replace('\'', ' ').replace('’', ' ').toLowerCase();
-    let normalisedUserAnswer    = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace('-', ' ').replace('\'', ' ').replace('’', ' ').toLowerCase();
+    let normalisedCorrectAnswer = correctAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll('-', ' ').replaceAll('\'', ' ').replaceAll('’', ' ').toLowerCase();
+    let normalisedUserAnswer    = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll('-', ' ').replaceAll('\'', ' ').replaceAll('’', ' ').toLowerCase();
+
+    console.log({ normalisedUserAnswer, normalisedCorrectAnswer });
 
     return normalisedCorrectAnswer === normalisedUserAnswer;
 }

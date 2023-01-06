@@ -1,0 +1,143 @@
+.login{
+    display: flex;
+    justify-content: space-between;
+    max-height: calc(100vh - 60px);
+    min-height: 400px;
+    overflow: hidden;
+
+    .login-form{
+        width: 45%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-bottom: 60px;
+
+        form{
+            padding-right: 30px;
+
+            .form-field{
+                display: flex;
+                flex-direction: column;
+                padding-bottom: 15px;
+
+                >div{
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                label{
+                    font-weight: bold;
+                    font-size: 14px;
+                    padding-bottom: 6px;
+                }
+
+                input{
+                    padding: 0 10px;
+                    border-radius: 8px;
+                    border: 1px solid #ccc;
+                    height: 36px;
+                    max-width: 350px;
+                }
+
+                &.checkbox{
+                    div{
+                        flex-direction: row-reverse;
+                        align-items: center;
+                        justify-content: flex-end;
+
+                        label{
+                            padding: 0 0 0 10px;
+                        }
+
+                        input{
+                            height: auto;
+                        }
+                    }
+                }
+            }
+
+            button{
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .login-countries{
+        width: 55%;
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+
+        .countries{
+            flex-wrap: unset;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            animation: scroll 600s linear infinite;
+
+            .country {
+                background: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                border-radius: 10px;
+                margin: 10px;
+                box-shadow: 0 0 16px #00000040;
+                width: 160px;
+
+                .flag {
+                    max-width: 100px;
+                    max-height: 68px;
+                    object-fit: contain;
+                    box-shadow: 0 0 16px #00000040;
+                }
+
+                .name {
+                    text-align: center;
+                    margin-top: 10px;
+
+                    &.success {
+                        font-weight: bold;
+                        color: forestgreen;
+                    }
+
+                    &.fail {
+                        font-weight: bold;
+                        color: darkred;
+                    }
+                }
+            }
+
+            &--reverse{
+                justify-content: flex-end;
+                animation: scroll-reverse 600s linear infinite;
+            }
+        }
+    }
+}
+
+@keyframes scroll {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-3000%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes scroll-reverse {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(3000%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
