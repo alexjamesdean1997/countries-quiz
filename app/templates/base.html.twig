@@ -15,13 +15,18 @@
     <body>
         {% block navbar %}
             <header>
-                <div class="logo">
-                    Geogames
-                </div>
+                <a href="/" class="logo">
+                    {{ 'Geogames' }}
+                </a>
                 <nav>
-                    <a href="{{ path('app_games') }}">{{ 'Jouer' }}</a>
-                    <a href="{{ path('app_dashboard') }}">{{ 'Mon compte' }}</a>
-                    <a href="{{ path('app_logout') }}">{{ 'Déconnexion' }}</a>
+                    {% if app.user %}
+                        <a href="{{ path('app_games') }}">{{ 'Jouer' }}</a>
+                        <a href="{{ path('app_dashboard') }}">{{ 'Mon compte' }}</a>
+                        <a href="{{ path('app_logout') }}">{{ 'Déconnexion' }}</a>
+                    {% else %}
+                        <a href="{{ path('app_login') }}">{{ 'Connexion' }}</a>
+                        <a href="{{ path('app_register') }}">{{ 'Créer un compte' }}</a>
+                    {% endif %}
                 </nav>
             </header>
         {% endblock %}
