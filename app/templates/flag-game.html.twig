@@ -22,13 +22,13 @@
 {% endblock %}
 {% block body %}
     <main>
-        <h1>{{ 'Trouvez le pays de chaque drapeau' }}</h1>
+        <h1>{{ 'Trouves le pays de chaque drapeau' }}</h1>
         <div class="countries">
             {% for country in countries %}
                 <div class="country" data-encrypted="{{ country.getEncryptedName }}">
-                    <img class="flag"
-                         src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}"
-                         alt="flag">
+                    <div class="flag">
+                        <img src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="flag">
+                    </div>
                     <div class="name">
                         <label>
                             <input class="name-input" type="text">
