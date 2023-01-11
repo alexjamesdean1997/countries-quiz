@@ -2,9 +2,32 @@
 
 {% block body %}
     <main>
-        <h1>{{ 'Choisissez un mode de jeu' }}</h1>
-        <div class="games">
-            <a href="{{ path('app_flag_game') }}">{{ 'Trouvez le pays de chaque drapeau' }}</a>
+        <h1>{{ 'Choisis un mode de jeu' }}</h1>
+        <div class="cards">
+            <div class="card">
+                <img src="{{ asset("images/flags2.jpg") }}" alt="flags">
+                <div class="card__body">
+                    <h2 class="card__title">{{ 'Les drapeaux' }}</h2>
+                    <p>{{ 'Trouves le nom du pays associé à chaque drapeau' }}</p>
+                    <a href="{{ path('app_flag_game') }}" class="btn">{{ 'Jouer' }}</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ asset("images/country2.jpg") }}" alt="flags">
+                <div class="card__body">
+                    <h2 class="card__title">{{ 'Les pays' }}</h2>
+                    <p>{{ 'Récites le maximum de pays' }}</p>
+                    <a href="{{ path('app_flag_game') }}" class="btn">{{ 'Jouer' }}</a>
+                </div>
+            </div>
+            <div class="card">
+                <img src="{{ asset("images/map2.jpg") }}" alt="flags">
+                <div class="card__body">
+                    <h2 class="card__title">{{ 'La carte' }}</h2>
+                    <p>{{ 'Devines le nom du pays affiché sur la carte' }}</p>
+                    <a href="{{ path('app_flag_game') }}" class="btn">{{ 'Jouer' }}</a>
+                </div>
+            </div>
         </div>
     </main>
 {% endblock %}

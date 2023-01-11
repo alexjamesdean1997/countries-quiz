@@ -1,0 +1,45 @@
+.cards{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    .card{
+        width: 100%;
+        border-radius: 10px;
+        background-color: white;
+        box-shadow: 0 0 12px #00000028;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+
+        img{
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        &__title{
+            font-size: 22px;
+            font-weight: 500;
+            line-height: 26px;
+            padding: 0 0 20px;
+        }
+
+        &__body{
+            padding: 25px 25px 80px;
+            position: relative;
+            height: 100%;
+
+            p{
+                margin: 0;
+                padding-bottom: 10px;
+            }
+
+            .btn{
+                position: absolute;
+                bottom: 25px;
+                left: 25px;
+            }
+        }
+    }
+}
