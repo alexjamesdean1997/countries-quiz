@@ -50,6 +50,10 @@ function saveCorrectAnswer(countryName) {
     $.ajax({
         url: '/flag-found/' + countryName,
         method: 'POST'
+    }).done(function(flagsLeft) {
+        if(0 === Number(flagsLeft)){
+            stopFlagGame();
+        }
     });
 }
 
@@ -57,12 +61,9 @@ function isCorrectAnswer(correctAnswer, userAnswer) {
     if (correctAnswer === userAnswer){
         return true;
     }
-    console.log({userAnswer, correctAnswer});
 
     let normalisedCorrectAnswer = correctAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll('-', ' ').replaceAll('\'', ' ').replaceAll('’', ' ').toLowerCase();
     let normalisedUserAnswer    = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll('-', ' ').replaceAll('\'', ' ').replaceAll('’', ' ').toLowerCase();
-
-    console.log({ normalisedUserAnswer, normalisedCorrectAnswer });
 
     return normalisedCorrectAnswer === normalisedUserAnswer;
 }
@@ -74,6 +75,7 @@ $( ".name-input" ).on("input", function(){
 
     if (isCorrectAnswer(decryptedAnswer, userAnswer)) {
         saveCorrectAnswer(decryptedAnswer);
+        $(this).closest('.country').next().find('input').focus();
         $('.countries').append($(this).closest('.country'));
         $(this).closest('.name').addClass('success').html(decryptedAnswer);
         let successCounter = $('.success-counter .successes');
@@ -81,7 +83,7 @@ $( ".name-input" ).on("input", function(){
     }
 });
 
-$( "#stopFlagGame" ).click(function() {
+$("#stopFlagGame").click(function() {
     stopFlagGame();
 });
 
@@ -102,6 +104,8 @@ function stopFlagGame() {
         url: '/stop-flag-game',
         method: 'POST'
     }).done(function() {
+        $("#stopFlagGame").hide();
+        $("#restartFlagGame").show();
         clearInterval(Interval);
         showAnswers();
     });

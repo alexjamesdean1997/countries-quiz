@@ -103,6 +103,7 @@ class FlagGameController extends AbstractController
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($game);
             $entityManager->flush();
+            $response->setContent(count($game->getForgottenCountries()));
             $response->setStatusCode(Response::HTTP_OK);
             return $response;
         }
