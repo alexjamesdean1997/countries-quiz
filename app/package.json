@@ -23,6 +23,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "@amcharts/amcharts5": "^5.2.47",
+        "@amcharts/amcharts5-geodata": "^5.1.0",
         "crypto-js": "^4.1.1"
     }
 }

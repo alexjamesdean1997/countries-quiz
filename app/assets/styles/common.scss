@@ -10,3 +10,13 @@ body {
         padding: 20px 0 40px;
     }
 }
+
+.d-flex{
+    display: flex;
+}
+
+@for $i from 1 through 10 {
+    .w-#{$i}0 {
+        width: #{$i} + "0%";
+    }
+}

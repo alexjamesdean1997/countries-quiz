@@ -24,21 +24,16 @@
 </div>
 {% endblock %}
 {% block body %}
-    <main>
-        <h1>{{ 'Trouves le pays de chaque drapeau' }}</h1>
-        <section class="countries">
-            {% for country in countries %}
-                <div class="country" data-encrypted="{{ country.getEncryptedName }}">
-                    <div class="flag">
-                        <img src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="flag">
-                    </div>
-                    <div class="name">
-                        <label>
-                            <input class="name-input" type="text">
-                        </label>
-                    </div>
-                </div>
-            {% endfor %}
+    <main class="country-names">
+        <section class="d-flex">
+            <div class="w-30">
+                <h1>{{ 'Les pays' }}</h1>
+                <p>{{ 'Récites le maximum de pays' }}</p>
+                <label>
+                    <input type="text">
+                </label>
+            </div>
+            <div id="mapContainer" class="map w-70"></div>
         </section>
     </main>
 {% endblock %}
