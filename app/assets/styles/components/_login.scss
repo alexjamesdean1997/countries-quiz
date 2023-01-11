@@ -1,7 +1,11 @@
+.authentication{
+    padding: 0;
+}
+
 .login{
     display: flex;
     justify-content: space-between;
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 76px);
     min-height: 400px;
     overflow: hidden;
 
@@ -84,14 +88,14 @@
                 padding: 20px;
                 border-radius: 10px;
                 margin: 10px;
-                box-shadow: 0 0 16px #00000040;
+                box-shadow: 0 0 12px #00000028;
                 width: 160px;
 
                 .flag {
                     max-width: 100px;
                     max-height: 68px;
                     object-fit: contain;
-                    box-shadow: 0 0 16px #00000040;
+                    box-shadow: 0 0 12px #00000028;
                 }
 
                 .name {

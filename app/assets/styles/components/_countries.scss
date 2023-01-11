@@ -3,6 +3,7 @@
     gap: 20px;
     justify-content: space-between;
     flex-wrap: wrap;
+    padding: 20px 0;
 
     &:after {
         content: "";
@@ -25,9 +26,12 @@
             align-items: center;
 
             img {
+                height: auto;
+                max-height: 90px;
+                width: 100%;
                 max-width: 120px;
                 object-fit: contain;
-                box-shadow: 0 0 16px #00000040;
+                box-shadow: 0 0 12px #00000028;
             }
         }
 

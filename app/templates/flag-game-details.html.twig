@@ -42,7 +42,9 @@
             <div class="countries">
                 {% for country in forgotten_countries %}
                     <div class="country">
-                        <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                        <div class="flag">
+                            <img src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                        </div>
                         <div class="name">
                             {{ country.name }}
                         </div>
