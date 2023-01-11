@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main class="dashboard">
+        <h1>{{ 'Dashboard' }}</h1>
+        <div class="greeting">{{ 'Bienvenu' }} {{ user.getUsername }} !</div>
+        <section class="game-block">
+            <h2>{{ 'Choisis un mode de jeu' }}</h2>
+            <div class="cards">
+                <div class="card">
+                    <img src="{{ asset("images/flags2.jpg") }}" alt="flags">
+                    <div class="card__body">
+                        <h2 class="card__title">{{ 'Les drapeaux' }}</h2>
+                        <p>{{ 'Trouves le nom du pays associé à chaque drapeau' }}</p>
+                        <a href="{{ path('app_flag_game') }}" class="btn">{{ 'Jouer' }}</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ asset("images/country2.jpg") }}" alt="flags">
+                    <div class="card__body">
+                        <h2 class="card__title">{{ 'Les pays' }}</h2>
+                        <p>{{ 'Récites le maximum de pays' }}</p>
+                        <a href="{{ path('app_flag_game') }}" class="btn">{{ 'Jouer' }}</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="{{ asset("images/map2.jpg") }}" alt="flags">
+                    <div class="card__body">
+                        <h2 class="card__title">{{ 'La carte' }}</h2>
+                        <p>{{ 'Devines le nom du pays affiché sur la carte' }}</p>
+                        <a href="{{ path('app_flag_game') }}" class="btn">{{ 'Jouer' }}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

@@ -32,6 +32,12 @@ class DashboardController extends AbstractController
             ]
         );
 
+        if ([] === $flagGames) {
+            return $this->render('no_games_dashboard.html.twig', [
+                'user' => $user
+            ]);
+        }
+
         $bestScore     = 0;
         $totalPoints   = 0;
         $totalGameTime = 0;

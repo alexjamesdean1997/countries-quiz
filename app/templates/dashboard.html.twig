@@ -2,7 +2,8 @@
 
 {% block body %}
     <main class="dashboard">
-        <h1>{{ user.getUsername }}</h1>
+        <h1>{{ 'Dashboard' }}</h1>
+        <div class="greeting">{{ 'Bienvenu' }} {{ user.getUsername }} !</div>
         <section class="game-block">
             <h2>{{ 'Trouvez le pays de chaque drapeau' }}</h2>
             <div class="game-stats">
@@ -10,7 +11,9 @@
                     <div class="stat-title">
                         {{ 'Parties jouées' }}
                     </div>
-                    <div class="stat-number">{{ flag_games|length }}</div>
+                    <div class="stat-number">
+                        <span class="bold">{{ flag_games|length }}</span>
+                    </div>
                 </div>
                 <div class="stat">
                     <div class="stat-title">
@@ -18,8 +21,8 @@
                     </div>
                     <div class="stat-number">
                         <div class="success-counter">
-                            <span class="successes">{{ best_score }}</span>
-                            <span class="total">/ {{ countries|length }}</span>
+                            <span class="bold">{{ best_score }}</span>
+                            <span>/ {{ countries|length }}</span>
                         </div>
                     </div>
                 </div>
@@ -28,7 +31,9 @@
                         {{ 'Temps moyen par bonne réponse' }}
                     </div>
                     <div class="stat-number">
-                        {{ average_score_time }} secondes
+                        <span class="bold">{{ average_score_time }} </span>
+                        <span>{{ 'secondes' }}</span>
+
                     </div>
                 </div>
             </div>
