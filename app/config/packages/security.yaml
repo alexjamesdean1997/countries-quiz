@@ -9,6 +9,7 @@ security:
             entity:
                 class: App\Entity\User
                 property: username
+    enable_authenticator_manager: true
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
