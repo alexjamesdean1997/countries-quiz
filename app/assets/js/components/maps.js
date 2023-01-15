@@ -2,6 +2,8 @@ import * as am5 from "@amcharts/amcharts5";
 import * as am5map from "@amcharts/amcharts5/map";
 import am5geoData_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
+import { CryptoJSAesJson } from './CryptoJSAesJson';
+import $ from 'jquery';
 
 let root = am5.Root.new("mapContainer");
 
@@ -27,17 +29,8 @@ let polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
 }));
 
 polygonSeries.mapPolygons.template.setAll({
-    tooltipText: "{name}",
     toggleKey: "active",
     interactive: true
-});
-
-polygonSeries.mapPolygons.template.states.create("hover", {
-    fill: root.interfaceColors.get("primaryButtonHover")
-});
-
-polygonSeries.mapPolygons.template.states.create("active", {
-    fill: root.interfaceColors.get("primaryButtonHover")
 });
 
 let previousPolygon;
@@ -66,3 +59,44 @@ chart.chartContainer.get("background").events.on("click", function () {
 
 // Make stuff animate on load
 chart.appear(1000, 100);
+
+function htmlDecode(input) {
+    var doc = new DOMParser().parseFromString(input, "text/html");
+    return doc.documentElement.textContent;
+}
+
+$( "#countryNames" ).on("input", function(){
+
+    let normalisedUserAnswer =
+        $(this).val()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replaceAll('-', ' ')
+            .replaceAll('\'', ' ')
+            .replaceAll('’', ' ')
+            .toLowerCase();
+
+    for (const country of countries) {
+        let decryptedCountry  = CryptoJSAesJson.decrypt(htmlDecode(country), "W0rldQu!z123");
+        let normalisedCountry =
+            decryptedCountry
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .replaceAll('-', ' ')
+                .replaceAll('\'', ' ')
+                .replaceAll('’', ' ')
+                .toLowerCase();
+
+        if(normalisedUserAnswer === normalisedCountry){
+            $(this).val('');
+            $.ajax({
+                url: '/get-country-iso/' + decryptedCountry,
+                method: 'GET'
+            }).done(function(countryIso) {
+                let dataItem = polygonSeries.getDataItemById(countryIso);
+                dataItem.get("mapPolygon").set("fill", am5.color('#00ff00'));
+            });
+        }
+    }
+
+});

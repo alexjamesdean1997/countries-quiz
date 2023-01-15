@@ -30,10 +30,17 @@
                 <h1>{{ 'Les pays' }}</h1>
                 <p>{{ 'Récites le maximum de pays' }}</p>
                 <label>
-                    <input type="text">
+                    <input id="countryNames" type="text">
                 </label>
             </div>
             <div id="mapContainer" class="map w-70"></div>
         </section>
     </main>
+    <script type="application/javascript">
+        const countries = [
+            {% for country in countries %}
+                '{{ country.getEncryptedName }}',
+            {% endfor %}
+        ]
+    </script>
 {% endblock %}
