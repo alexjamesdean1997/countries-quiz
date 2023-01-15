@@ -12,13 +12,23 @@ function saveCorrectAnswer(countryName) {
     });
 }
 
+function normaliseString(string) {
+    return string
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replaceAll('-', ' ')
+        .replaceAll('\'', ' ')
+        .replaceAll('’', ' ')
+        .toLowerCase();
+}
+
 function isCorrectAnswer(correctAnswer, userAnswer) {
     if (correctAnswer === userAnswer){
         return true;
     }
 
-    let normalisedCorrectAnswer = correctAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll('-', ' ').replaceAll('\'', ' ').replaceAll('’', ' ').toLowerCase();
-    let normalisedUserAnswer    = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replaceAll('-', ' ').replaceAll('\'', ' ').replaceAll('’', ' ').toLowerCase();
+    let normalisedCorrectAnswer = normaliseString(correctAnswer);
+    let normalisedUserAnswer    = normaliseString(userAnswer);
 
     return normalisedCorrectAnswer === normalisedUserAnswer;
 }
