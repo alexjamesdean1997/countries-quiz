@@ -16,7 +16,7 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
-        width: 180px;
+        width: 200px;
         padding: 20px;
         border-radius: 10px;
 
@@ -38,6 +38,7 @@
         .name {
             text-align: center;
             margin-top: 10px;
+            width: 100%;
 
             &.success {
                 font-weight: bold;
@@ -47,6 +48,14 @@
             &.fail {
                 font-weight: bold;
                 color: darkred;
+            }
+
+            label{
+                width: 100%;
+
+                input{
+                    width: -webkit-fill-available;
+                }
             }
         }
     }

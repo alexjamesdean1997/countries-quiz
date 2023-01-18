@@ -1,3 +1,8 @@
+ul{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
 .cards{
     display: flex;
     justify-content: space-between;
@@ -40,6 +45,18 @@
                 bottom: 25px;
                 left: 25px;
             }
+        }
+    }
+}
+
+.country-names-listing{
+    .continents{
+        display: flex;
+        flex-wrap: wrap;
+
+        .continent{
+            width: 25%;
+            min-width: 250px;
         }
     }
 }

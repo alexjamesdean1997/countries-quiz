@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('FlagGame') }}
+{% endblock %}
+
 {% block gamebar %}
 <div class="game-bar">
     <div class="game-timer">
@@ -24,7 +29,7 @@
 </div>
 {% endblock %}
 {% block body %}
-    <main>
+    <main class="game-container">
         <h1>{{ 'Trouves le pays de chaque drapeau' }}</h1>
         <section class="countries">
             {% for country in countries %}
@@ -34,7 +39,7 @@
                     </div>
                     <div class="name">
                         <label>
-                            <input class="name-input" type="text">
+                            <input class="name-input input" type="text">
                         </label>
                     </div>
                 </div>

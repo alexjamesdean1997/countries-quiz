@@ -1,11 +1,11 @@
 .authentication{
-    padding: 0;
+    padding: 0 15px;
 }
 
 .login{
     display: flex;
     justify-content: space-between;
-    max-height: calc(100vh - 76px);
+    height: calc(100vh - 76px);
     min-height: 400px;
     overflow: hidden;
 

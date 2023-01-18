@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('CountryNamesGame') }}
+{% endblock %}
+
 {% block gamebar %}
 <div class="game-bar">
     <div class="game-timer">
@@ -14,26 +19,54 @@
         <span class="total">/ {{ countries|length }}</span>
     </div>
     <div class="game-stop">
-        <button id="stopFlagGame" class="btn btn-stop">
+        <button id="stopCountryNamesGame" class="btn btn-stop">
             {{ 'Terminer' }}
         </button>
-        <a id="restartFlagGame" class="btn btn-start" href="/flag-game" style="display: none;">
+        <a id="restartCountryNamesGame" class="btn btn-start" href="/country-names-game" style="display: none;">
             {{ 'Recommencer' }}
         </a>
     </div>
 </div>
 {% endblock %}
 {% block body %}
-    <main class="country-names">
+    <main class="game-container">
         <section class="d-flex">
             <div class="w-30">
                 <h1>{{ 'Les pays' }}</h1>
                 <p>{{ 'Récites le maximum de pays' }}</p>
-                <label>
-                    <input id="countryNames" type="text">
+                <label class="w-100">
+                    <input id="countryNames" class="input input--big input--white w-80" type="text">
                 </label>
             </div>
             <div id="mapContainer" class="map w-70"></div>
+        </section>
+        <section id="foundCountries" class="country-names-listing">
+            <div class="continents">
+                <div class="continent" data-continent-code="AF">
+                    <h2 class="pb-10">{{ 'Afrique' }}</h2>
+                    <ul></ul>
+                </div>
+                <div class="continent" data-continent-code="NA">
+                    <h2 class="pb-10">{{ 'Amérique du Nord' }}</h2>
+                    <ul></ul>
+                </div>
+                <div class="continent" data-continent-code="SA">
+                    <h2 class="pb-10">{{ 'Amérique du Sud' }}</h2>
+                    <ul></ul>
+                </div>
+                <div class="continent" data-continent-code="AS">
+                    <h2 class="pb-10">{{ 'Asie' }}</h2>
+                    <ul></ul>
+                </div>
+                <div class="continent" data-continent-code="EU">
+                    <h2 class="pb-10">{{ 'Europe' }}</h2>
+                    <ul></ul>
+                </div>
+                <div class="continent" data-continent-code="OC">
+                    <h2 class="pb-10">{{ 'Océanie' }}</h2>
+                    <ul></ul>
+                </div>
+            </div>
         </section>
     </main>
     <script type="application/javascript">

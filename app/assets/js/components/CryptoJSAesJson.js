@@ -1,6 +1,6 @@
 import * as CryptoJS from 'crypto-js';
 
-export var CryptoJSAesJson = {
+export var cryptoJSAesJson = {
     /**
      * Encrypt any value
      * @param {*} value
@@ -8,7 +8,7 @@ export var CryptoJSAesJson = {
      * @return {string}
      */
     encrypt: function (value, password) {
-        return CryptoJS.AES.encrypt(JSON.stringify(value), password, { format: CryptoJSAesJson }).toString()
+        return CryptoJS.AES.encrypt(JSON.stringify(value), password, { format: cryptoJSAesJson }).toString()
     },
     /**
      * Decrypt a previously encrypted value
@@ -17,7 +17,7 @@ export var CryptoJSAesJson = {
      * @return {*}
      */
     decrypt: function (jsonStr, password) {
-        return JSON.parse(CryptoJS.AES.decrypt(jsonStr, password, { format: CryptoJSAesJson }).toString(CryptoJS.enc.Utf8))
+        return JSON.parse(CryptoJS.AES.decrypt(jsonStr, password, { format: cryptoJSAesJson }).toString(CryptoJS.enc.Utf8))
     },
     /**
      * Stringify cryptojs data

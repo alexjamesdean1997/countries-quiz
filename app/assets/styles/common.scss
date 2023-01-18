@@ -6,8 +6,8 @@ body {
 
     main {
         margin: 0 auto;
-        max-width: 1200px;
-        padding: 20px 0 40px;
+        max-width: 1280px;
+        padding: 20px 15px 40px;
     }
 }
 
@@ -18,5 +18,17 @@ body {
 @for $i from 1 through 10 {
     .w-#{$i}0 {
         width: #{$i} + "0%";
+    }
+
+    .p-#{$i}0 {
+        padding: #{$i} + "0px";
+    }
+
+    .pb-#{$i}0 {
+        padding-bottom: #{$i} + "0px";
+    }
+
+    .pt-#{$i}0 {
+        padding-top: #{$i} + "0px";
     }
 }
