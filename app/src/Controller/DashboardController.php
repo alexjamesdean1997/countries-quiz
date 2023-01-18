@@ -33,7 +33,7 @@ class DashboardController extends AbstractController
         );
 
         if ([] === $flagGames) {
-            return $this->render('no_games_dashboard.html.twig', [
+            return $this->render('no-games-dashboard.html.twig', [
                 'user' => $user
             ]);
         }
