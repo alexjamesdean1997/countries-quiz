@@ -72,7 +72,7 @@ class FlagGameController extends AbstractController
     }
 
     #[Route('/flag-found/{countryName}', methods: ['POST'])]
-    public function flagGuessed(string $countryName): Response
+    public function flagFound(string $countryName): Response
     {
         $response = new Response();
         $country = $this->doctrine->getRepository(Country::class)->findOneByName($countryName);

@@ -31,6 +31,17 @@ function isCorrectAnswer(correctAnswer, userAnswer) {
     return normalisedCorrectAnswer === normalisedUserAnswer;
 }
 
+function saveCorrectAnswer(countryName) {
+    $.ajax({
+        url: '/country-name-found/' + countryName,
+        method: 'POST'
+    }).done(function(countryNamesLeft) {
+        if(0 === Number(countryNamesLeft)){
+            stopCountryNamesGame();
+        }
+    });
+}
+
 function stopCountryNamesGame() {
     $.ajax({
         url: '/stop-country-names-game',
@@ -59,9 +70,22 @@ function addCountryToSavedAnswers(countryInfo) {
     savedAnswers.push(countryInfo['name']);
 }
 
-function highlightCountryMap(countryIso) {
-    let dataItem = polygonSeries.getDataItemById(countryIso);
+function highlightCountryMap(countryInfo) {
+    let dataItem = polygonSeries.getDataItemById(countryInfo['iso']);
     dataItem.get("mapPolygon").set("fill", am5.color('#8ac926'));
+    dataItem.get("mapPolygon").set("tooltipText", countryInfo['name']);
+}
+
+function manageCorrectAnswerDisplay(decryptedCountry) {
+    $.ajax({
+        url: '/get-country-info/' + decryptedCountry,
+        method: 'GET'
+    }).done(function(countryInfo) {
+        highlightCountryMap(countryInfo);
+        addCountryToSavedAnswers(countryInfo);
+        sortFoundCountries();
+        incrementScore();
+    });
 }
 
 let root = am5.Root.new("mapContainer");
@@ -127,15 +151,8 @@ $( "#countryNames" ).on("input", function(){
 
         if (isCorrectAnswer(decryptedCountry, userAnswer)){
             $(this).val('');
-            $.ajax({
-                url: '/get-country-info/' + decryptedCountry,
-                method: 'GET'
-            }).done(function(countryInfo) {
-                highlightCountryMap(countryInfo['iso']);
-                addCountryToSavedAnswers(countryInfo);
-                sortFoundCountries();
-                incrementScore();
-            });
+            saveCorrectAnswer(decryptedCountry);
+            manageCorrectAnswerDisplay(decryptedCountry);
         }
     }
 });

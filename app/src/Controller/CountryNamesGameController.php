@@ -101,6 +101,50 @@ class CountryNamesGameController extends AbstractController
         $entityManager->flush();
     }
 
+    #[Route('/country-name-found/{countryName}', methods: ['POST'])]
+    public function countryNameFound(string $countryName): Response
+    {
+        $response = new Response();
+        $country = $this->doctrine->getRepository(Country::class)->findOneByName($countryName);
+
+        if (null === $country) {
+            $response->setStatusCode(Response::HTTP_NOT_FOUND);
+            $response->setContent('Country "' . $countryName . '" not found');
+            return $response;
+        }
+
+        $user = $this->getUser();
+        $gameRepository = $this->doctrine->getRepository(Game::class);
+        $game = $gameRepository->findOneBy(
+            [
+                'player' => $user->getId(),
+                'state' => GameService::GAME_STATE_IN_PROGRESS
+            ]
+        );
+
+        if (null === $game) {
+            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response->setContent('The user has no game');
+            return $response;
+        }
+
+        try{
+            $game->removeForgottenCountry($country);
+            $entityManager = $this->doctrine->getManager();
+            $entityManager->persist($game);
+            $entityManager->flush();
+            $response->setContent(count($game->getForgottenCountries()));
+            $response->setStatusCode(Response::HTTP_OK);
+            return $response;
+        }
+        catch(\Exception $e){
+            error_log($e->getMessage());
+            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
+            $response->setContent($e->getMessage());
+            return $response;
+        }
+    }
+
     #[Route('/stop-country-names-game', methods: ['POST'])]
     public function stopGame(): Response
     {
