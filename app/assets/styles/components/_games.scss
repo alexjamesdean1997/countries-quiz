@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     background-color: white;
-    box-shadow: 0 0 12px #00000028;
+    box-shadow: rgb(0 0 0 / 8%) 0 -1px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -38,13 +38,11 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
-    padding-bottom: 30px;
 
     .stat{
-        background: white;
-        box-shadow: 0 0 12px #00000028;
+        background: #f7f7f8;
         padding: 20px;
-        border-radius: 10px;
+        border-radius: 14px;
         width: 100%;
 
         .stat-title{
@@ -64,5 +62,5 @@
 }
 
 .game-container {
-    padding: 0 15px 70px;
+    padding: 0 15px 120px;
 }

@@ -24,7 +24,7 @@
 
 body{
     font-family: 'LexendDeca', sans-serif;
-    color: #21304f;
+    color: #000000;
     font-size: 16px;
     line-height: 1.5;
     font-weight: 100;
@@ -37,4 +37,24 @@ h1, h2, h3{
 
 h3{
     font-weight: normal;
+}
+
+.bold{
+    font-weight: 500;
+}
+
+.text-center{
+    text-align: center;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.green{
+    color: forestgreen;
+}
+
+.red{
+    color: $red;
 }

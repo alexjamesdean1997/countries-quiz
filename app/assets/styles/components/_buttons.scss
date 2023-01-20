@@ -44,10 +44,12 @@
 a{
     text-decoration: none;
     padding: 0 15px;
-    color: #0062cc;
+    color: #000000;
+    font-size: 14px;
+    font-weight: 500;
 
     &:hover, &:focus{
-        color: #21304f;
+
         text-decoration: none;
     }
 }

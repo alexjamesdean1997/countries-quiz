@@ -9,11 +9,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: white;
-            box-shadow: 0 0 12px #00000028;
-            padding: 20px;
-            border-radius: 10px;
+            background: #f7f7f8;
+            padding: 15px 20px;
+            border-radius: 14px;
             margin-bottom: 15px;
+
+            &__item{
+                width: 25%;
+            }
         }
     }
 }
