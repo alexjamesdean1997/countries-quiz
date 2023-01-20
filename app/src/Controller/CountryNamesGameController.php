@@ -146,9 +146,9 @@ class CountryNamesGameController extends AbstractController
     }
 
     #[Route('/stop-country-names-game', methods: ['POST'])]
-    public function stopGame(): Response
+    public function stopGame(): JsonResponse
     {
-        $response       = new Response();
+        $response       = new JsonResponse();
         $entityManager  = $this->doctrine->getManager();
         $user           = $this->getUser();
         $gameRepository = $this->doctrine->getRepository(Game::class);
@@ -165,11 +165,26 @@ class CountryNamesGameController extends AbstractController
             $entityManager->persist($gameInProgress);
             $entityManager->flush();
             $response->setStatusCode(Response::HTTP_OK);
+            $response->setData($this->buildForgottenCountriesData($gameInProgress));
             return $response;
         }
 
         $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         $response->setContent('No games in progress found');
         return $response;
+    }
+
+    private function buildForgottenCountriesData(Game $gameInProgress): array
+    {
+        $forgottenCountries = [];
+
+        foreach ($gameInProgress->getForgottenCountries() as $country) {
+            $forgottenCountries[] = [
+                "iso" => strtoupper($country->getFlagImgCode()),
+                "name" => $country->getName()
+            ];
+        }
+
+        return $forgottenCountries;
     }
 }
