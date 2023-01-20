@@ -4,8 +4,7 @@
     <main class="dashboard">
         <h1>{{ 'Dashboard' }}</h1>
         <div class="greeting">{{ 'Bienvenu' }} {{ user.getUsername }} !</div>
-        <section class="game-block">
-            <h2>{{ 'Trouvez le pays de chaque drapeau' }}</h2>
+        <section class="game-block pt-30">
             <div class="game-stats">
                 <div class="stat">
                     <div class="stat-title">
@@ -41,17 +40,26 @@
             <div class="games-listing">
                 {% for game in flag_games %}
                     <div class="game-summary">
-                        <div class="game-timer">
+                        <div class="game-summary__item">
+                            <b>
+                                {% if game.type is same as('country_names') %}
+                                    {{ 'Les pays' }}
+                                {% elseif game.type is same as('flags') %}
+                                    {{ 'Les drapeaux' }}
+                                {% endif %}
+                            </b>
+                        </div>
+                        <div class="game-summary__item text-center">
                             {% if (game.getDuration.format('%h') > 0) %}
                                 {{ game.getDuration.format('%h h') }}
                             {% endif %}
                             {{ game.getDuration.format('%i m %s s') }}
                         </div>
-                        <div class="success-counter">
+                        <div class="game-summary__item text-center">
                             <span class="successes">{{ countries|length - game.getForgottenCountries|length }}</span>
                             <span class="total">/ {{ countries|length }}</span>
                         </div>
-                        <div class="game-stop">
+                        <div class="game-summary__item text-right">
                             <a class="btn" href="/game/{{ game.id }}">
                                 {{ 'En savoir plus' }}
                             </a>

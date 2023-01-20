@@ -76,7 +76,7 @@ class DashboardController extends AbstractController
             ]
         );
 
-        if (GameService::GAME_TYPE_FLAGS === $game->getType()) {
+        if (null !== $game->getType()) {
             return $this->flagGameDetails($countries, $game);
         }
 
