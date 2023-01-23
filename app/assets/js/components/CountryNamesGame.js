@@ -70,27 +70,55 @@ function addCountryToAnswers(countryInfo, itemClass) {
     savedAnswers.push(countryInfo['name']);
 }
 
-function highlightCountryMap(countryInfo, color) {
+function highlightCountryMap(countryInfo, success) {
+    let color = '#8ac926';
+
+    if (false === success) {
+        color = '#dc3545';
+    }
+
     let dataItems           = [];
     let mainCountryDataItem = polygonSeries.getDataItemById(countryInfo['iso']);
     dataItems.push(mainCountryDataItem);
-
-    if ('FR' === countryInfo['iso']){
-        dataItems.push(polygonSeries.getDataItemById('GF'));
-        dataItems.push(polygonSeries.getDataItemById('GP'));
-        dataItems.push(polygonSeries.getDataItemById('PF'));
-        dataItems.push(polygonSeries.getDataItemById('PM'));
-        dataItems.push(polygonSeries.getDataItemById('NC'));
-        dataItems.push(polygonSeries.getDataItemById('RE'));
-        dataItems.push(polygonSeries.getDataItemById('WF'));
-    }
 
     if ('DK' === countryInfo['iso']){
         dataItems.push(polygonSeries.getDataItemById('GL'));
     }
 
+    if ('GB' === countryInfo['iso']){
+        dataItems.push(polygonSeries.getDataItemById('AI'));
+        dataItems.push(polygonSeries.getDataItemById('KY'));
+        dataItems.push(polygonSeries.getDataItemById('MS'));
+        dataItems.push(polygonSeries.getDataItemById('TC'));
+    }
+
+    if ('FR' === countryInfo['iso']){
+        dataItems.push(polygonSeries.getDataItemById('BL'));
+        dataItems.push(polygonSeries.getDataItemById('GF'));
+        dataItems.push(polygonSeries.getDataItemById('GP'));
+        dataItems.push(polygonSeries.getDataItemById('MF'));
+        dataItems.push(polygonSeries.getDataItemById('MQ'));
+        dataItems.push(polygonSeries.getDataItemById('NC'));
+        dataItems.push(polygonSeries.getDataItemById('PF'));
+        dataItems.push(polygonSeries.getDataItemById('PM'));
+        dataItems.push(polygonSeries.getDataItemById('RE'));
+        dataItems.push(polygonSeries.getDataItemById('WF'));
+        dataItems.push(polygonSeries.getDataItemById('YT'));
+    }
+
+    if ('NL' === countryInfo['iso']){
+        dataItems.push(polygonSeries.getDataItemById('BQ'));
+        dataItems.push(polygonSeries.getDataItemById('CW'));
+        dataItems.push(polygonSeries.getDataItemById('SX'));
+    }
+
     if ('NO' === countryInfo['iso']){
         dataItems.push(polygonSeries.getDataItemById('SJ'));
+    }
+
+    if ('US' === countryInfo['iso']){
+        dataItems.push(polygonSeries.getDataItemById('AS'));
+        dataItems.push(polygonSeries.getDataItemById('VI'));
     }
 
     dataItems.forEach((dataItem) => {
@@ -98,11 +126,13 @@ function highlightCountryMap(countryInfo, color) {
         dataItem.get("mapPolygon").set("tooltipText", countryInfo['name']);
     });
 
-    polygonSeries.zoomToDataItem(mainCountryDataItem);
+    if (true === success) {
+        polygonSeries.zoomToDataItem(mainCountryDataItem);
 
-    setTimeout(function(){
-        chart.goHome();
-    },2000);
+        setTimeout(function(){
+            chart.goHome();
+        },2000);
+    }
 }
 
 function manageStopGameDisplay(forgottenCountries) {
@@ -113,7 +143,7 @@ function manageStopGameDisplay(forgottenCountries) {
         let dataItem = polygonSeries.getDataItemById(country['iso']);
         dataItem.get("mapPolygon").set("fill", am5.color('#dc3545'));
         dataItem.get("mapPolygon").set("tooltipText", country['name']);
-        highlightCountryMap(country, '#dc3545')
+        highlightCountryMap(country, false)
         addCountryToAnswers(country, 'red');
     });
 
@@ -125,7 +155,7 @@ function manageCorrectAnswerDisplay(decryptedCountry) {
         url: '/get-country-info/' + decryptedCountry,
         method: 'GET'
     }).done(function(countryInfo) {
-        highlightCountryMap(countryInfo, '#8ac926');
+        highlightCountryMap(countryInfo, true);
         addCountryToAnswers(countryInfo, 'green');
         sortFoundCountries();
         incrementScore();
@@ -142,7 +172,7 @@ let chart = root.container.children.push(am5map.MapChart.new(root, {
     panX: "rotateX",
     panY: "translateY",
     projection: am5map.geoNaturalEarth1(),
-    maxZoomLevel: 20,
+    maxZoomLevel: 40,
 }));
 
 let backgroundSeries = chart.series.unshift(
@@ -170,12 +200,26 @@ polygonSeries.mapPolygons.template.setAll({
     templateField: "polygonSettings"
 });
 
-polygonSeries.data.setAll([{
-    id: "EH",
-    polygonSettings: {
-        fill: am5.color("#AAAAAA")
-    }
-}]);
+polygonSeries.data.setAll([
+    {
+        id: "EH",
+        polygonSettings: {
+            fill: am5.color("#AAAAAA")
+        }
+    },
+    {
+        id: "PS",
+        polygonSettings: {
+            fill: am5.color("#AAAAAA")
+        }
+    },
+    {
+        id: "XK",
+        polygonSettings: {
+            fill: am5.color("#AAAAAA")
+        }
+    },
+]);
 
 let previousPolygon;
 
