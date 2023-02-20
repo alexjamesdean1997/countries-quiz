@@ -15,6 +15,10 @@ class ListCountriesController extends AbstractController
     {
         $countries = $doctrine->getRepository(Country::class)->findAll();
 
+        $data = file_get_contents('./../data/countries.json');
+        $jsonData = json_decode($data,1);
+        dd($jsonData);
+
         return $this->render('list-countries.html.twig', [
             'countries' => $countries,
         ]);

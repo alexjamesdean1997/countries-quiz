@@ -277,4 +277,4 @@ $(document).on("click", ".country-name" , function() {
     polygonSeries.zoomToDataItem(dataItem);
 });
 
-console.log(am5geoData_data_countries2);
+//console.log(am5geoData_data_countries2);
