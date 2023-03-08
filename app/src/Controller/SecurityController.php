@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Country;
+use App\Service\CountryService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,12 +12,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    private ManagerRegistry $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine) {
-        $this->doctrine = $doctrine;
-    }
-
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
     public function logout()
     {
@@ -28,7 +23,7 @@ class SecurityController extends AbstractController
     {
         $error        = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        $countries    = $this->doctrine->getRepository(Country::class)->findAll();
+        $countries    = CountryService::getAll();
         shuffle($countries);
         $user = $this->getUser();
 

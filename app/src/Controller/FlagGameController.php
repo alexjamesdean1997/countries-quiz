@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Country;
 use App\Entity\Game;
+use App\Service\CountryService;
 use App\Service\Encrypter;
 use App\Service\GameService;
 use DateTimeImmutable;
@@ -24,13 +25,13 @@ class FlagGameController extends AbstractController
     #[Route('/flag-game', name: 'app_flag_game')]
     public function show(): Response
     {
-        $countries = $this->doctrine->getRepository(Country::class)->findAll();
+        $countries = CountryService::getAll();
         $this->startGame($countries);
         shuffle($countries);
 
         foreach ($countries as $country){
             $encryptedName = Encrypter::encrypt($country->getName(), 'W0rldQu!z123');
-            $country->setEncryptedName($encryptedName);
+            $country->encryptedName = $encryptedName;
         }
 
         return $this->render('flag-game.html.twig', [
@@ -75,7 +76,7 @@ class FlagGameController extends AbstractController
     public function flagFound(string $countryName): Response
     {
         $response = new Response();
-        $country = $this->doctrine->getRepository(Country::class)->findOneByName($countryName);
+        $country = CountryService::get($countryName);
 
         if (null === $country) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);

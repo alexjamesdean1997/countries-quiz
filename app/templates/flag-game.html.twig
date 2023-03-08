@@ -35,7 +35,7 @@
             {% for country in countries %}
                 <div class="country" data-encrypted="{{ country.getEncryptedName }}">
                     <div class="flag">
-                        <img src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="flag">
+                        <img src="{{ asset("flags/") ~ country.iso2 ~".svg" }}" alt="flag">
                     </div>
                     <div class="name">
                         <label>

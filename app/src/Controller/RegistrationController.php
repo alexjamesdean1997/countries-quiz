@@ -6,6 +6,7 @@ use App\Entity\Country;
 use App\Entity\User;
 use App\Form\RegistrationFormType;
 use App\Security\SecurityAuthenticator;
+use App\Service\CountryService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -18,12 +19,6 @@ use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 class RegistrationController extends AbstractController
 {
-    private ManagerRegistry $doctrine;
-
-    public function __construct(ManagerRegistry $doctrine) {
-        $this->doctrine = $doctrine;
-    }
-
     #[Route('/register', name: 'app_register')]
     public function register(
         Request $request,
@@ -57,7 +52,7 @@ class RegistrationController extends AbstractController
                 $request);
         }
 
-        $countries    = $this->doctrine->getRepository(Country::class)->findAll();
+        $countries = CountryService::getAll();
         shuffle($countries);
 
         return $this->render('registration/register.html.twig', [

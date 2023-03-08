@@ -29,9 +29,9 @@
                 <div class="countries">
                     {% for country in countries %}
                         <div class="country">
-                            <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                            <img class="flag" src="{{ asset("flags/") ~ country.iso2 ~".svg"  }}" alt="{{ country.nameEn }} flag">
                             <div class="name">
-                                {{ country.name }}
+                                {{ country.nameFr }}
                             </div>
                         </div>
                     {% endfor %}
@@ -39,9 +39,9 @@
                 <div class="countries countries--reverse">
                     {% for country in countries %}
                         <div class="country">
-                            <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                            <img class="flag" src="{{ asset("flags/") ~ country.iso2 ~".svg"  }}" alt="{{ country.nameEn }} flag">
                             <div class="name">
-                                {{ country.name }}
+                                {{ country.nameFr }}
                             </div>
                         </div>
                     {% endfor %}
@@ -49,9 +49,9 @@
                 <div class="countries">
                     {% for country in countries|shuffle %}
                         <div class="country">
-                            <img class="flag" src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                            <img class="flag" src="{{ asset("flags/") ~ country.iso2 ~".svg"  }}" alt="{{ country.nameEn }} flag">
                             <div class="name">
-                                {{ country.name }}
+                                {{ country.nameFr }}
                             </div>
                         </div>
                     {% endfor %}

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Country;
+use App\Service\CountryService;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,11 +13,7 @@ class ListCountriesController extends AbstractController
     #[Route('/', name: 'app_list_countries')]
     public function show(ManagerRegistry $doctrine): Response
     {
-        $countries = $doctrine->getRepository(Country::class)->findAll();
-
-        $data = file_get_contents('./../data/countries.json');
-        $jsonData = json_decode($data,1);
-        dd($jsonData);
+        $countries = CountryService::getAll();
 
         return $this->render('list-countries.html.twig', [
             'countries' => $countries,
