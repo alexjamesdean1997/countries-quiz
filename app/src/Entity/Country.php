@@ -9,5 +9,5 @@ class Country
     public string  $nameEN;
     public string  $capital;
     public ?string $encryptedName = null;
-    public bool   $independant;
+    public bool    $independant;
 }

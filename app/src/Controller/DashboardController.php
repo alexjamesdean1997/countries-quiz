@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Country;
 use App\Entity\Game;
+use App\Service\CountryService;
 use App\Service\GameService;
 use DateInterval;
 use Doctrine\Persistence\ManagerRegistry;
@@ -23,7 +24,7 @@ class DashboardController extends AbstractController
     public function index(): Response
     {
         $user           = $this->getUser();
-        $countries      = $this->doctrine->getRepository(Country::class)->findAll();
+        $countries      = CountryService::getAll();
         $gameRepository = $this->doctrine->getRepository(Game::class);
         $flagGames      = $gameRepository->findBy(
             [
@@ -52,7 +53,11 @@ class DashboardController extends AbstractController
             }
         }
 
-        $averageGameTime = $totalGameTime / $totalPoints;
+        $averageGameTime = 0;
+
+        if ($totalPoints > 0) {
+            $averageGameTime = $totalGameTime / $totalPoints;
+        }
 
         return $this->render('dashboard.html.twig', [
             'average_score_time' => number_format((float)$averageGameTime, 2, '.', ''),
@@ -67,7 +72,7 @@ class DashboardController extends AbstractController
     public function gameDetails($gameId): Response
     {
         $user           = $this->getUser();
-        $countries      = $this->doctrine->getRepository(Country::class)->findAll();
+        $countries      = CountryService::getAll();
         $gameRepository = $this->doctrine->getRepository(Game::class);
         $game           = $gameRepository->findOneBy(
             [

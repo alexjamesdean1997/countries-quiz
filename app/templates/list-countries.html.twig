@@ -7,10 +7,10 @@
             {% for country in countries %}
                 <div class="country">
                     <div class="flag">
-                        <img src="{{ asset("flags/") ~ country.getFlagImgCode ~".svg"  }}" alt="{{ country.name }} flag">
+                        <img src="{{ asset("flags/") ~ country.iso2 ~".svg"  }}" alt="{{ country.nameFr }} flag">
                     </div>
                     <div class="name">
-                        {{ country.name }}
+                        {{ country.nameFr }}
                     </div>
                 </div>
             {% endfor %}

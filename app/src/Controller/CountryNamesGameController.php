@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Country;
 use App\Entity\Game;
+use App\Service\CountryService;
 use App\Service\Encrypter;
 use App\Service\GameService;
 use DateTimeImmutable;
@@ -25,13 +26,12 @@ class CountryNamesGameController extends AbstractController
     #[Route('/country-names-game', name: 'app_country_names_game')]
     public function show(): Response
     {
-        $countries = $this->doctrine->getRepository(Country::class)->findAll();
+        $countries = CountryService::getAll();
         $this->startGame($countries);
         shuffle($countries);
 
         foreach ($countries as $country){
-            $encryptedName = Encrypter::encrypt($country->getName(), 'W0rldQu!z123');
-            $country->setEncryptedName($encryptedName);
+            $country->encryptedName = Encrypter::encrypt($country->nameFr, 'W0rldQu!z123');
         }
 
         return $this->render('country-names-game.html.twig', [
@@ -43,7 +43,7 @@ class CountryNamesGameController extends AbstractController
     public function getCountryIso(string $countryName): JsonResponse
     {
         $response = new JsonResponse();
-        $country = $this->doctrine->getRepository(Country::class)->findOneByName($countryName);
+        $country = CountryService::getByNameFr($countryName);
 
         if (null === $country) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
@@ -53,8 +53,8 @@ class CountryNamesGameController extends AbstractController
 
         try{
             $countryInfo = [
-                "iso" => strtoupper($country->getFlagImgCode()),
-                "name" => $country->getName()
+                "iso" => strtoupper($country->iso2),
+                "name" => $country->nameFr
             ];
             $response->setData($countryInfo);
             $response->setStatusCode(Response::HTTP_OK);
@@ -94,7 +94,7 @@ class CountryNamesGameController extends AbstractController
         $game->setType(GameService::GAME_TYPE_COUNTRY_NAMES);
 
         foreach ($countries as $country){
-            $game->addForgottenCountry($country);
+            $game->addForgottenCountry($country->iso2);
         }
 
         $entityManager->persist($game);
@@ -105,7 +105,7 @@ class CountryNamesGameController extends AbstractController
     public function countryNameFound(string $countryName): Response
     {
         $response = new Response();
-        $country = $this->doctrine->getRepository(Country::class)->findOneByName($countryName);
+        $country = CountryService::getByNameFr($countryName);
 
         if (null === $country) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
@@ -129,7 +129,7 @@ class CountryNamesGameController extends AbstractController
         }
 
         try{
-            $game->removeForgottenCountry($country);
+            $game->removeForgottenCountry($country->iso2);
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($game);
             $entityManager->flush();
@@ -180,8 +180,8 @@ class CountryNamesGameController extends AbstractController
 
         foreach ($gameInProgress->getForgottenCountries() as $country) {
             $forgottenCountries[] = [
-                "iso" => strtoupper($country->getFlagImgCode()),
-                "name" => $country->getName()
+                "iso" => $country->iso2,
+                "name" => $country->nameFr
             ];
         }
 

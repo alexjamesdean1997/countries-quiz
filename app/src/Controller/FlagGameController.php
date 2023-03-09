@@ -30,7 +30,7 @@ class FlagGameController extends AbstractController
         shuffle($countries);
 
         foreach ($countries as $country){
-            $encryptedName = Encrypter::encrypt($country->getName(), 'W0rldQu!z123');
+            $encryptedName = Encrypter::encrypt($country->nameFr, 'W0rldQu!z123');
             $country->encryptedName = $encryptedName;
         }
 
@@ -65,7 +65,7 @@ class FlagGameController extends AbstractController
         $game->setType(GameService::GAME_TYPE_FLAGS);
 
         foreach ($countries as $country){
-            $game->addForgottenCountry($country);
+            $game->addForgottenCountry($country->iso2);
         }
 
         $entityManager->persist($game);
@@ -76,7 +76,7 @@ class FlagGameController extends AbstractController
     public function flagFound(string $countryName): Response
     {
         $response = new Response();
-        $country = CountryService::get($countryName);
+        $country = CountryService::getByNameFr($countryName);
 
         if (null === $country) {
             $response->setStatusCode(Response::HTTP_NOT_FOUND);
@@ -100,7 +100,7 @@ class FlagGameController extends AbstractController
         }
 
         try{
-            $game->removeForgottenCountry($country);
+            $game->removeForgottenCountry($country->iso2);
             $entityManager = $this->doctrine->getManager();
             $entityManager->persist($game);
             $entityManager->flush();

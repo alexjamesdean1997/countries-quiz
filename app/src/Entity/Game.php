@@ -3,10 +3,12 @@
 namespace App\Entity;
 
 use App\Repository\GameRepository;
+use App\Service\CountryService;
 use DateInterval;
 use DateTimeImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
@@ -17,8 +19,8 @@ class Game
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Country::class)]
-    private Collection $forgotten_countries;
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private array $forgotten_countries = [];
 
     #[ORM\ManyToOne(inversedBy: 'games')]
     #[ORM\JoinColumn(nullable: false)]
@@ -36,36 +38,36 @@ class Game
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $finished_at = null;
 
-    public function __construct()
-    {
-        $this->forgotten_countries = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Country>
-     */
-    public function getForgottenCountries(): Collection
+    public function getForgottenCountries(): array
     {
-        return $this->forgotten_countries;
+        $countries = [];
+
+        foreach ($this->forgotten_countries as $countryIso2) {
+            $countries[] = CountryService::getByIso2($countryIso2);
+        }
+
+        return $countries;
     }
 
-    public function addForgottenCountry(Country $forgottenCountry): self
+    public function addForgottenCountry(string $forgottenCountryIso2): self
     {
-        if (!$this->forgotten_countries->contains($forgottenCountry)) {
-            $this->forgotten_countries->add($forgottenCountry);
+        if (false === in_array($forgottenCountryIso2, $this->forgotten_countries)) {
+            $this->forgotten_countries[] = $forgottenCountryIso2;
         }
 
         return $this;
     }
 
-    public function removeForgottenCountry(Country $forgottenCountry): self
+    public function removeForgottenCountry(string $forgottenCountryIso2): self
     {
-        $this->forgotten_countries->removeElement($forgottenCountry);
+        if (($key = array_search($forgottenCountryIso2, $this->forgotten_countries)) !== false) {
+            unset($this->forgotten_countries[$key]);
+        }
 
         return $this;
     }
